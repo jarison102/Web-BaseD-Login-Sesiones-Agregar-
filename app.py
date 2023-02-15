@@ -1,6 +1,10 @@
 from flask import Flask
 from flask import render_template, request,redirect #redirect sirve para enviar informacion y mostrar
 from flaskext.mysql import MySQL
+from datetime import datetime 
+from flask import send_from_directory #esto nos sirve informacion directamente de la imagen
+import os
+
 app= Flask(__name__)
 mysql = MySQL()#conexion
 
@@ -14,9 +18,20 @@ mysql.init_app(app)
 def inicio():
     return render_template('admin/sitio/index.html')
 
+@app.route('/img/<imagen>') #lo que hace que se muestre la imagen es todo esto de la 21 a 24
+def imgenes(imagen):
+    print(imagen)
+    return send_from_directory(os.path.join('templates/admin/sitio/img'),imagen)
+
 @app.route('/libros')
 def libros():
-    return render_template('admin/sitio/libros.html')
+    conexion=mysql.connect() 
+    cursor=conexion.cursor()
+    cursor.execute("SELECT * FROM `libros` ")
+    libros=cursor.fetchall()
+    conexion.commit()
+    print(libros)
+    return render_template('admin/sitio/libros.html',libros=libros)
 
 @app.route('/nosotros')
 def nosotros():
@@ -54,9 +69,16 @@ def admin_libros_guardar():
     _nombre=request.form['txtNombre']
     _url =request.form['txtUrl']
     _archivo = request.files['txtImagen']
+
+    tiempo = datetime.now()
+    horaActual = tiempo.strftime('%Y%H%M%S')
+
+    if _archivo.filename!="":
+        nuevoNombre=horaActual+"_"+_archivo.filename
+        _archivo.save("templates/admin/sitio/img/"+nuevoNombre)
     #se ejecuta la instruccion sql
     sql = "INSERT INTO `libros` (`id`, `nombre`, `imagen`, `url`) VALUES (NULL, %s,%s,%s);"
-    datos=(_nombre,_archivo.filename,_url)
+    datos=(_nombre,nuevoNombre,_url)
     #se habre la conexion
     conexion = mysql.connect()
     #se crear un cursor
@@ -78,12 +100,15 @@ def admin_libro_borrar():
     conexion=mysql.connect()#esto es para conectar directamente con la base de datos 
     cursor=conexion.cursor()
     #instruccion de seleccion sql
-    cursor.execute("SELECT * FROM `libros` WHERE id=%s",(_id))
+    cursor.execute("SELECT imagen FROM `libros` WHERE id=%s",(_id))
     #recuperamos todos estos libros los almacenamos en una variable
     libro=cursor.fetchall()
     conexion.commit()
    #para que me muestre los datos en la terminal
-    print(libros)
+    print(libro)
+    #valida que hay una imagen y si hay la borra
+    if os.path.exists("templates/admin/sitio/img/"+str(libro[0][0])):
+        os.unlink("templates/admin/sitio/img/"+str(libro[0][0]))
     
     #borrado de tablas 
     conexion=mysql.connect()
