@@ -1,11 +1,15 @@
 from flask import Flask
-from flask import render_template, request,redirect #redirect sirve para enviar informacion y mostrar
+#redirect sirve para enviar informacion y mostrar
+from flaskext.mysql import MySQL
+from flask import render_template, request,redirect,session
 from flaskext.mysql import MySQL
 from datetime import datetime 
 from flask import send_from_directory #esto nos sirve informacion directamente de la imagen
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app= Flask(__name__)
+app.secret_key="Stivur"
 mysql = MySQL()#conexion
 
 app.config['MYSQL_DATABASE_HOST']='localhost'#del 7 al 10 infromacion necesaria para la conexion 
@@ -50,6 +54,29 @@ def admin_index():
 def admin_login():
     return render_template('admin/login.html')
 
+@app.route('/admin/login', methods=['POST'])
+def admin_login_post():
+    _Nombre = request.form['txtNombre']
+    _SegundoNombre = request.form['txtSegundoNombre']
+    _Username = request.form['txtUsername']
+    _Ciudad = request.form['txtCiudad']
+    _Estado = request.form['txtEstado']
+    _Pais = request.form ['txtPais']
+
+    print(_Nombre)
+    print(_SegundoNombre)
+    print(_Username)
+    print(_Ciudad)
+    print(_Estado)
+    print(_Pais)
+    if _Nombre=="Jarison" and _SegundoNombre =="Stived" and _Username =="Stivur" and _Ciudad=="Bogota" and _Estado=="Activo" and _Pais =="Colombia":
+        session["login"]=True
+        session["Nombre"]="Administrador"
+        return redirect ("/admin/")
+    return render_template("/admin/login.html")
+
+
+    
 @app.route('/admin/libros')
 def admin_libros():
     conexion=mysql.connect()#esto es para conectar directamente con la base de datos 

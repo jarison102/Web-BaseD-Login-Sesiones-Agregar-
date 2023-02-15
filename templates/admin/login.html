@@ -27,7 +27,7 @@
                         Inicio De Sesion
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form action="admin/index.html" method="post">
                             <div class="form-row">
                               <div class="col-md-10 mb-3">
                                 <label for="txtNombre">Primer Nombre</label>
@@ -37,19 +37,19 @@
                                 </div>
                               </div>
                               <div class="col-md-10 mb-3">
-                                <label for="validationServer02">Segundo Nombre</label>
-                                <input type="txtSegundoNombre" class="form-control is-valid" id="txtSegundoNombre" placeholder="Segundo Nombre" value="" required>
+                                <label for="txtSegundoNombre">Segundo Nombre</label>
+                                <input type="text" name ="txtSegundoNombre" class="form-control is-valid" id="txtSegundoNombre" placeholder="Segundo Nombre" value="" required>
                                 <div class="valid-feedback">
                                     Correcto!!
                                 </div>
                               </div>
                               <div class="col-md-10 mb-3">
-                                <label for="validationServerUsername">Username</label>
+                                <label for="txtUsername">Username</label>
                                 <div class="input-group">
                                   <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                                    <span class="input-group-text" id="txtUsername">@</span>
                                   </div>
-                                  <input type="text" class="form-control is-invalid" id="validationServerUsername" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
+                                  <input name="txtUsername" type="text" class="form-control is-invalid" id="txtUsername" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
                                   <div class="invalid-feedback">
                                     Porfavor Username
                                   </div>
@@ -58,41 +58,31 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-10 mb-3">
-                                  <label for="validationServer01">Ciudad</label>
-                                  <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Ciudad" value="" required>
+                                  <label for="txtCiudad">Ciudad</label>
+                                  <input type="text" name="txtCiudad" class="form-control is-valid" id="txtCiudad" placeholder="Ciudad" value="" required>
                                   <div class="valid-feedback">
                                     Correcto!!
                                   </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-10 mb-3">
-                                      <label for="validationServer01">Estado</label>
-                                      <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Estado" value="" required>
+                                      <label for="txtEstado">Estado</label>
+                                      <input type="text" name="txtEstado" class="form-control is-valid" id="txtEstado" placeholder="Estado" value="" required>
                                       <div class="valid-feedback">
                                         Correcto!!
                                       </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-10 mb-3">
-                                          <label for="validationServer01">Pais</label>
-                                          <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Pais" value="" required>
+                                          <label for="txtPais">Pais</label>
+                                          <input type="text" name="txtPais" class="form-control is-valid" id="txtPais" placeholder="Pais" value="" required>
                                           <div class="valid-feedback">
                                             Correcto!!
                                           </div>
                                         </div>
                                     </div>
                             </div>
-                            <div class="form-group">
-                              <div class="form-check">
-                                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
-                                <label class="form-check-label" for="invalidCheck3">
-                                    Acepto los términos y condiciones
-                                </label>
-                                <div class="invalid-feedback">
-                                </div>
-                              </div>
-                            </div>
-                            <button class="btn btn-primary" type="submit">Entrar</button>
+                            <a name="" id="" class="btn btn-primary" href="/admin/" role="button">Entrar</a>
                           </form>
                     </div>
                     <div class="card-footer text-muted">
